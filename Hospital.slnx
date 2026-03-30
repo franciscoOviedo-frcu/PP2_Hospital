@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/01- Comun/">
+    <Project Path="Comun/Comun.csproj" />
+  </Folder>
+  <Folder Name="/02- Modelo/">
+    <Project Path="Modelo/Modelo.csproj" />
+  </Folder>
+  <Folder Name="/03- Acceso a Datos/">
+    <Project Path="Datos/Datos.csproj" />
+  </Folder>
+  <Folder Name="/04- Cliente Rest/">
+    <Project Path="Rest/Rest.csproj" />
+  </Folder>
+  <Folder Name="/05- Logica de Negocio/">
+    <Project Path="Logica/Logica.csproj" />
+  </Folder>
+  <Folder Name="/06- Web API/">
+    <Project Path="WebAPI/WebAPI.csproj" />
+  </Folder>
+</Solution>
