@@ -54,6 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexto\DbConexion.cs" />
+    <Compile Include="Metadatos\Egreso.cs" />
+    <Compile Include="Metadatos\Ingreso.cs" />
+    <Compile Include="Metadatos\Medico.cs" />
+    <Compile Include="Metadatos\Paciente.cs" />
     <Compile Include="Modelos\Egreso.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -89,7 +93,9 @@
       <Name>Comun</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Validadores\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <EntityDeploy Include="Modelos\Model.edmx">
