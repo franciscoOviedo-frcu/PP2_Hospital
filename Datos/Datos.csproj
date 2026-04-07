@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\EgresoDAL.cs" />
+    <Compile Include="DAL\IngresoDAL.cs" />
+    <Compile Include="DAL\MedicoDAL.cs" />
+    <Compile Include="DAL\PacienteDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
