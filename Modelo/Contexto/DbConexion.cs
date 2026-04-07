@@ -17,7 +17,7 @@ namespace Modelo.Modelos //El namespace debe ser el mismo que el namespace del m
             this.Database.CommandTimeout = 900;
         }
 
-        public static DbConexion Create(string stringConexion)
+        public static DbConexion Create(/*string stringConexion*/)
         {
             return new DbConexion("name=DbConexion");
         }
