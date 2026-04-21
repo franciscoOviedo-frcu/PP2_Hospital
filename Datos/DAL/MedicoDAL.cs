@@ -49,7 +49,16 @@ namespace Datos.DAL
 
             using (var db = DbConexion.Create())
             {
-
+                item = db.Medico.Where(x => !x.borrado && x.id == id).Select(x => new MedicoVMR
+                {
+                    id = x.id,
+                    cedula = x.cedula,
+                    nombre = x.nombre,
+                    apellidoMaterno = x.apellidoMaterno,
+                    apellidoPaterno = x.apellidoPaterno,
+                    habilitado = x.habilitado,
+                    esEspecialista = x.esEspecialista
+                }).FirstOrDefault();
             }
 
             return item;
@@ -61,22 +70,43 @@ namespace Datos.DAL
 
             using (var db = DbConexion.Create())
             {
-
+                Item.borrado = false;
+                db.Medico.Add(Item);
+                db.SaveChanges();
             }
 
             return id;
         }
 
-        public static void Actualizar(Medico Item)
+        public static void Actualizar(MedicoVMR Item)
         {
             using (var db = DbConexion.Create())
             {
+                var itemUpdate = db.Medico.Find(Item.id);
+
+                itemUpdate.cedula = Item.cedula;
+                itemUpdate.nombre = Item.nombre;
+                itemUpdate.apellidoPaterno = Item.apellidoPaterno;
+                itemUpdate.apellidoMaterno = Item.apellidoMaterno;
+                itemUpdate.esEspecialista = Item.esEspecialista;
+                itemUpdate.habilitado = Item.habilitado;
+
+                db.Entry(itemUpdate).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
             }
         }
         public static void Eliminar(List<long> ids)
         {
             using (var db = DbConexion.Create())
             {
+                var items = db.Medico.Where(x => ids.Contains(x.id));
+
+                foreach (var item in items)
+                {
+                    item.borrado = true;
+                    db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                }
+                db.SaveChanges();
             }
         }
     }
