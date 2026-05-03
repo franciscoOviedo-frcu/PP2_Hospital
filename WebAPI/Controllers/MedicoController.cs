@@ -1,4 +1,5 @@
 ﻿using Comun.ViewModels;
+using Logica.BLL;
 using Modelo.Modelos;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,29 @@ namespace WebAPI.Controllers
 {
     public class MedicoController : ApiController
     {
+        [HttpGet]
         public IHttpActionResult LeerTodo(int cantidad = 10, int pagina = 0, string textobusqueda = null)
         {
-            return Ok(Logica.BLL.MedicoBLL.LeerTodo(cantidad, pagina, textobusqueda));
+            var respuesta = new RespuestaVMR<ListadoPaginadoVMR<MedicoVMR>>();
+
+            try
+            {
+                respuesta.Datos = MedicoBLL.LeerTodo(cantidad, pagina, textobusqueda);
+            }
+            catch (Exception e)
+            {
+                respuesta.Codigo = HttpStatusCode.InternalServerError;
+                respuesta.Datos = null;
+                respuesta.mensajes.Add(e.Message);
+                respuesta.mensajes.Add(e.ToString());
+            }
+
+            return Content(respuesta.Codigo, respuesta);
+
         }
 
 
-        public IHttpActionResult LeerUno(long id)
+        /*public IHttpActionResult LeerUno(long id)
         {
 
         }
@@ -32,6 +49,6 @@ namespace WebAPI.Controllers
 
         public IHttpActionResult Eliminar(List<long> ids)
         {
-        }
+        }*/
     }
 }
