@@ -66,7 +66,6 @@ namespace Datos.DAL
 
         public static long Crear(Medico Item)
         {
-            long id = 0;
 
             using (var db = DbConexion.Create())
             {
@@ -75,7 +74,7 @@ namespace Datos.DAL
                 db.SaveChanges();
             }
 
-            return id;
+            return Item.id;
         }
 
         public static void Actualizar(MedicoVMR Item)

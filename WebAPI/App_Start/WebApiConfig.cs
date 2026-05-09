@@ -11,6 +11,8 @@ namespace WebAPI
         {
             // Configuración y servicios de Web API
 
+            config.EnableCors();    //habilita el CORS para permitir solicitudes desde otros dominios, se puede configurar para permitir solo ciertos orígenes, headers y métodos
+
             // Rutas de Web API
             config.MapHttpAttributeRoutes();
 
