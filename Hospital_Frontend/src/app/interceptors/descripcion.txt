@@ -1,0 +1,1 @@
+Los interceptores permiten interceptar las peticiones al servidor y agregar logica a las peticiones

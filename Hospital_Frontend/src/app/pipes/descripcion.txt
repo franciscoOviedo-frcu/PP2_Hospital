@@ -1,0 +1,1 @@
+Aqui estaran los pipes personalizados que permitiran foramtear la informacion que se visualiza en pantalla

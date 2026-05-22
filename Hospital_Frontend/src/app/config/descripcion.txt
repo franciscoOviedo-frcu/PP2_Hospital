@@ -1,0 +1,1 @@
+Aqui se almacenarán los archivos de configuracion general del proyecto
