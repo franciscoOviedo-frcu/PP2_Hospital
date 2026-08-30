@@ -5,17 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Cors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")] //se puede especificar el origen, los headers y los métodos permitidos
-    public class MedicoController : ApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MedicoController : ControllerBase
     {
-        [HttpGet]
-        public IHttpActionResult LeerTodo(int cantidad = 10, int pagina = 0, string textobusqueda = null)
+        [HttpGet("leer-todo")]
+        public ActionResult<RespuestaVMR<ListadoPaginadoVMR<MedicoVMR>>> LeerTodo(int cantidad = 10, int pagina = 0, string textobusqueda = null)
         {
             var respuesta = new RespuestaVMR<ListadoPaginadoVMR<MedicoVMR>>();
 
@@ -31,12 +30,11 @@ namespace WebAPI.Controllers
                 respuesta.mensajes.Add(e.ToString());
             }
 
-            return Content(respuesta.Codigo, respuesta);
-
+            return StatusCode((int)respuesta.Codigo, respuesta);
         }
 
-        [HttpGet] 
-        public IHttpActionResult LeerUno(long id)
+        [HttpGet("{id}")]
+        public ActionResult<RespuestaVMR<MedicoVMR>> LeerUno(long id)
         {
             var respuesta = new RespuestaVMR<MedicoVMR>();
 
@@ -58,11 +56,11 @@ namespace WebAPI.Controllers
                 respuesta.mensajes.Add("No se encontró el médico con el id especificado.");
             }
 
-            return Content(respuesta.Codigo, respuesta);
+            return StatusCode((int)respuesta.Codigo, respuesta);
         }
 
         [HttpPost]
-        public IHttpActionResult Crear(Medico Item)
+        public ActionResult<RespuestaVMR<long?>> Crear(Medico Item)
         {
             var respuesta = new RespuestaVMR<long?>();
 
@@ -78,11 +76,11 @@ namespace WebAPI.Controllers
                 respuesta.mensajes.Add(e.ToString());
             }
 
-            return Content(respuesta.Codigo, respuesta);
+            return StatusCode((int)respuesta.Codigo, respuesta);
         }
 
-        [HttpPut]
-        public IHttpActionResult Actualizar(long id, MedicoVMR Item)
+        [HttpPut("{id}")]
+        public ActionResult<RespuestaVMR<bool>> Actualizar(long id, MedicoVMR Item)
         {
             var respuesta = new RespuestaVMR<bool>();
 
@@ -100,17 +98,16 @@ namespace WebAPI.Controllers
                 respuesta.mensajes.Add(e.ToString());
             }
 
-            return Content(respuesta.Codigo, respuesta);
+            return StatusCode((int)respuesta.Codigo, respuesta);
         }
 
         [HttpDelete]
-        public IHttpActionResult Eliminar(List<long> ids)
+        public ActionResult<RespuestaVMR<bool>> Eliminar(List<long> ids)
         {
             var respuesta = new RespuestaVMR<bool>();
 
             try
             {
-               
                 MedicoBLL.Eliminar(ids);
                 respuesta.Datos = true;
             }
@@ -122,7 +119,7 @@ namespace WebAPI.Controllers
                 respuesta.mensajes.Add(e.ToString());
             }
 
-            return Content(respuesta.Codigo, respuesta);
+            return StatusCode((int)respuesta.Codigo, respuesta);
         }
     }
 }
