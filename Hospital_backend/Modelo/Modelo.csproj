@@ -11,4 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Comun\Comun.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Modelos\Model.edmx" />
+  </ItemGroup>
 </Project>

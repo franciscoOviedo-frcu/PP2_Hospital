@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,6 +9,8 @@ namespace Modelo.Modelos //El namespace debe ser el mismo que el namespace del m
 {
     public partial class DbConexion : DbContext
     {
+        public static string CadenaConexionConfigurada { get; set; } = "name=DbConexion";
+
         private DbConexion(string stringConexion)
             : base(stringConexion)
         {
@@ -17,9 +19,9 @@ namespace Modelo.Modelos //El namespace debe ser el mismo que el namespace del m
             this.Database.CommandTimeout = 900;
         }
 
-        public static DbConexion Create(/*string stringConexion*/)
+        public static DbConexion Create()
         {
-            return new DbConexion("name=DbConexion");
+            return new DbConexion(CadenaConexionConfigurada);
         }
     }
 }

@@ -1,0 +1,28 @@
+.table-header-select {
+  width: 48px;
+}
+
+.table-row {
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+}
+
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+mat-table {
+  border-radius: 8px;
+  overflow: hidden;
+}

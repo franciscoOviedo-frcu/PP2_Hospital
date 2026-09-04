@@ -1,1 +1,184 @@
-<p>form works!</p>
+<div class="row justify-content-center">
+  <div class="col-12 col-md-10 col-lg-8">
+    <div class="card shadow-sm border-0">
+      <!-- Encabezado de Tarjeta -->
+      <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+          <button mat-icon-button type="button" (click)="cancelar()" matTooltip="Volver al listado">
+            <span class="material-icons">arrow_back</span>
+          </button>
+          <div>
+            <h3 class="mb-0 text-primary">
+              {{ esEdicion() ? 'Editar Información del Médico' : 'Registrar Nuevo Médico' }}
+            </h3>
+            <p class="text-muted small mb-0">
+              {{ esEdicion() ? 'Modifique los campos necesarios del médico #' + medicoId() : 'Complete los campos obligatorios para dar de alta al médico' }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuerpo del Formulario -->
+      <div class="card-body p-4">
+        @if (cargando()) {
+          <div class="d-flex justify-content-center align-items-center py-5">
+            <mat-spinner diameter="48"></mat-spinner>
+            <span class="ms-3 text-muted">Cargando datos del médico...</span>
+          </div>
+        } @else {
+          <form [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+            <div class="row g-3">
+              <!-- Cédula -->
+              <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Cédula de Identidad</mat-label>
+                  <input
+                    matInput
+                    formControlName="cedula"
+                    placeholder="Ej. 1234567890"
+                    maxlength="10"
+                    required
+                  />
+                  <mat-icon matPrefix class="me-2 text-muted">badge</mat-icon>
+                  @if (form.get('cedula')?.invalid && form.get('cedula')?.touched) {
+                    <mat-error>
+                      @if (form.get('cedula')?.hasError('required')) {
+                        La cédula es obligatoria.
+                      }
+                      @if (form.get('cedula')?.hasError('maxlength')) {
+                        Máximo 10 caracteres permitidos.
+                      }
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <!-- Nombre -->
+              <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Nombre(s)</mat-label>
+                  <input
+                    matInput
+                    formControlName="nombre"
+                    placeholder="Ej. Juan Carlos"
+                    maxlength="50"
+                    required
+                  />
+                  <mat-icon matPrefix class="me-2 text-muted">person</mat-icon>
+                  @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
+                    <mat-error>
+                      @if (form.get('nombre')?.hasError('required')) {
+                        El nombre es obligatorio.
+                      }
+                      @if (form.get('nombre')?.hasError('maxlength')) {
+                        Máximo 50 caracteres permitidos.
+                      }
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <!-- Apellido Paterno -->
+              <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Apellido Paterno</mat-label>
+                  <input
+                    matInput
+                    formControlName="apellidoPaterno"
+                    placeholder="Ej. Pérez"
+                    maxlength="50"
+                    required
+                  />
+                  <mat-icon matPrefix class="me-2 text-muted">person_outline</mat-icon>
+                  @if (form.get('apellidoPaterno')?.invalid && form.get('apellidoPaterno')?.touched) {
+                    <mat-error>
+                      @if (form.get('apellidoPaterno')?.hasError('required')) {
+                        El apellido paterno es obligatorio.
+                      }
+                      @if (form.get('apellidoPaterno')?.hasError('maxlength')) {
+                        Máximo 50 caracteres permitidos.
+                      }
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <!-- Apellido Materno -->
+              <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Apellido Materno (Opcional)</mat-label>
+                  <input
+                    matInput
+                    formControlName="apellidoMaterno"
+                    placeholder="Ej. González"
+                    maxlength="50"
+                  />
+                  <mat-icon matPrefix class="me-2 text-muted">person_outline</mat-icon>
+                  @if (form.get('apellidoMaterno')?.invalid && form.get('apellidoMaterno')?.touched) {
+                    <mat-error>
+                      @if (form.get('apellidoMaterno')?.hasError('maxlength')) {
+                        Máximo 50 caracteres permitidos.
+                      }
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <!-- Switches de Especialista y Habilitado -->
+              <div class="col-12 col-md-6 py-2">
+                <div class="p-3 border rounded bg-light d-flex align-items-center justify-content-between">
+                  <div>
+                    <strong class="d-block">¿Es Especialista?</strong>
+                    <small class="text-muted">Indica si posee especialidad médica</small>
+                  </div>
+                  <mat-slide-toggle formControlName="esEspecialista" color="primary">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6 py-2">
+                <div class="p-3 border rounded bg-light d-flex align-items-center justify-content-between">
+                  <div>
+                    <strong class="d-block">Estado Habilitado</strong>
+                    <small class="text-muted">Permite asignar turnos o admisiones</small>
+                  </div>
+                  <mat-slide-toggle formControlName="habilitado" color="primary">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="d-flex justify-content-end gap-3 mt-4 pt-3 border-top">
+              <button
+                type="button"
+                mat-stroked-button
+                (click)="cancelar()"
+                [disabled]="guardando()"
+              >
+                Cancelar
+              </button>
+
+              <button
+                type="submit"
+                mat-flat-button
+                color="primary"
+                [disabled]="guardando() || form.invalid"
+              >
+                <span class="d-inline-flex align-items-center gap-2">
+                  @if (guardando()) {
+                    <mat-spinner diameter="18"></mat-spinner>
+                    <span>Guardando...</span>
+                  } @else {
+                    <span class="material-icons">save</span>
+                    <span>{{ esEdicion() ? 'Actualizar Médico' : 'Registrar Médico' }}</span>
+                  }
+                </span>
+              </button>
+            </div>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>

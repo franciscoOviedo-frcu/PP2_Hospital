@@ -21,7 +21,8 @@ namespace Datos.DAL
                     id= x.id,
                     cedula = x.cedula,
                     nombre = x.nombre + " " + x.apellidoPaterno + (x.apellidoMaterno != null ? (" "+ x.apellidoMaterno) : ""),
-                    esEspecialista = x.esEspecialista
+                    esEspecialista = x.esEspecialista,
+                    habilitado = x.habilitado
                 });
 
                 if (!string.IsNullOrEmpty(textobusqueda))
