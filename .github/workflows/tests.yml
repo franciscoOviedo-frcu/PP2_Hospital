@@ -2,7 +2,7 @@ name: Ejecutar Tests .NET
 
 on:
   push:
-    branches: [ "main", "master", "develop" ]
+    branches: [ "main", "master", "Migración" ]
   pull_request:
     branches: [ "main", "master" ]
 
