@@ -17,4 +17,5 @@
   <Folder Name="/06- Web API/">
     <Project Path="WebAPI/WebAPI.csproj" Id="ad40fe0e-c616-4271-956a-f87ea91bb7f8" />
   </Folder>
+  <Project Path="Tests/Tests.csproj" />
 </Solution>
