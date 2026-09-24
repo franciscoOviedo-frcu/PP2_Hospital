@@ -2,7 +2,7 @@ name: Ejecutar Tests .NET
 
 on:
   push:
-    branches: [ "main", "master", "Migración" ]
+    branches: [ "main", "master", "develop" ]
   pull_request:
     branches: [ "main", "master" ]
 
@@ -10,25 +10,25 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    # Le indica a GitHub que trabaje dentro de la carpeta del backend
+    defaults:
+      run:
+        working-directory: Hospital_backend
+
     steps:
-    # 1. Descarga el código del repositorio
     - name: Checkout del repositorio
       uses: actions/checkout@v4
 
-    # 2. Instala el SDK de .NET (ajustá la versión si usás 8.0, 9.0, etc.)
     - name: Configurar .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '8.0.x' # Si usás .NET 9, cambiá a '9.0.x'
 
-    # 3. Restaura los paquetes NuGet
     - name: Restaurar dependencias
       run: dotnet restore
 
-    # 4. Compila la solución
     - name: Compilar solución
       run: dotnet build --no-restore
 
-    # 5. Ejecuta las pruebas
     - name: Correr tests
       run: dotnet test --no-build --verbosity normal
