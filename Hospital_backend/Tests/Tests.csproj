@@ -23,4 +23,8 @@
     <ProjectReference Include="..\WebAPI\WebAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Medico_Unit\" />
+  </ItemGroup>
+
 </Project>

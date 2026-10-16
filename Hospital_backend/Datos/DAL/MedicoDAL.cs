@@ -70,9 +70,9 @@ namespace Datos.DAL
 
             using (var db = DbConexion.Create())
             {
-                Item.borrado = false;
+                Item.borrado = false; //Fuerza el borrado logico en falso
                 db.Medico.Add(Item);
-                db.SaveChanges();
+                db.SaveChanges();  //Se ejecuta el insert en la base de datos
             }
 
             return Item.id;
@@ -82,7 +82,12 @@ namespace Datos.DAL
         {
             using (var db = DbConexion.Create())
             {
-                var itemUpdate = db.Medico.Find(Item.id);
+                var itemUpdate = db.Medico.Find(Item.id); 
+
+                if (itemUpdate == null || itemUpdate.borrado) //Se ignoran los borrados, ya que sino alguien puede manipular un registro que no aparece en la lista, dejandolo en un estado inconsistente
+                {
+                    throw new Exception("No se encontró el registro a actualizar con el id " + Item.id);
+                }
 
                 itemUpdate.cedula = Item.cedula;
                 itemUpdate.nombre = Item.nombre;
@@ -91,7 +96,7 @@ namespace Datos.DAL
                 itemUpdate.esEspecialista = Item.esEspecialista;
                 itemUpdate.habilitado = Item.habilitado;
 
-                db.Entry(itemUpdate).State = System.Data.Entity.EntityState.Modified;
+                //db.Entry(itemUpdate).State = System.Data.Entity.EntityState.Modified; //No es necesario, EF detecta los cambios, esta línea hace que se guarde todo el objeto
                 db.SaveChanges();
             }
         }
@@ -104,7 +109,7 @@ namespace Datos.DAL
                 foreach (var item in items)
                 {
                     item.borrado = true;
-                    db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                    //db.Entry(item).State = System.Data.Entity.EntityState.Modified; //Redundante, igual que en el actualizar
                 }
                 db.SaveChanges();
             }
